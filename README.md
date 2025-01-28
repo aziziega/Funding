@@ -1,8 +1,7 @@
-# Pelacak Kemajuan Pengembangan Smart Contract
+# Progress
 
 ## Ringkasan
-Proyek ini terdiri dari dua smart contract Solidity:
-1. **FundMe.sol**: Memungkinkan pengguna untuk mengirim dana (dalam ETH) dan menetapkan jumlah pendanaan minimum dalam USD. Pengguna juga dapat menarik dana jika diperlukan.
+1. **FundMe.sol**: mengirim dana dalam bentuk ETH dan kasi Minimum USD. Untuk withdrawl masih  Memungkinkan pengguna untuk mengirim dana (dalam ETH) dan menetapkan jumlah pendanaan minimum dalam USD. Pengguna juga dapat menarik dana jika diperlukan.
 2. **PriceConverter.sol**: Sebuah pustaka utilitas yang mengambil harga ETH terkini menggunakan oracle Chainlink dan mengonversi jumlah ETH ke USD.
 
 Kedua kontrak ini dirancang untuk dijalankan di Sepolia Testnet.
