@@ -51,7 +51,7 @@ contract FundMe {
 
     }
 
-    function wintrdrawl() public {
+    function withdrawl() public {
         // for loop
         // for(/* start index, ending index, step amount increment atau decrement */)
         for (uint256 funderIndex = 0; funderIndex < funders.length; funderIndex++) {
