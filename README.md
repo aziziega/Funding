@@ -1,10 +1,11 @@
 # Progress
 
 ## Ringkasan
-1. **FundMe.sol**: mengirim dana dalam bentuk ETH dan kasi Minimum USD. Untuk withdrawl masih  Memungkinkan pengguna untuk mengirim dana (dalam ETH) dan menetapkan jumlah pendanaan minimum dalam USD. Pengguna juga dapat menarik dana jika diperlukan.
-2. **PriceConverter.sol**: Sebuah pustaka utilitas yang mengambil harga ETH terkini menggunakan oracle Chainlink dan mengonversi jumlah ETH ke USD.
+1. **FundMe.sol**: mengirim dana dalam bentuk ETH dan kasi Minimum USD. Untuk fungsi withdrawl atau menarik masih belum berfungsi.
+2. **PriceConverter.sol**: Library yang mengambil harga ETH Secara Langsung menggunakan oracle Chainlink dan mengonversi jumlah ETH ke USD.
 
-Kedua kontrak ini dirancang untuk dijalankan di Sepolia Testnet.
+Kedua kontrak ini dirancang untuk dijalankan di SepoliaETH Testnet.
+address Deploy transaksi : 0xe2BC6A618bD2C8408769cCed3E9Eb0138fc2CEf9
 
 ---
 
