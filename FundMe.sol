@@ -33,6 +33,12 @@ contract FundMe {
     address[] public funders;
     mapping (address => uint256 amountFunded) public addressToAmountFunded;
 
+    address public owner;
+
+    constructor () {
+        owner = msg.sender;
+    }
+
     function fund() public payable {
 
         // allow user to send $
@@ -51,13 +57,47 @@ contract FundMe {
 
     }
 
-    function withdrawl() public {
+    
+
+    function withdrawl() public onlyOwner {
         // for loop
         // for(/* start index, ending index, step amount increment atau decrement */)
         for (uint256 funderIndex = 0; funderIndex < funders.length; funderIndex++) {
             address funder = funders[funderIndex];
             addressToAmountFunded[funder] = 0;
         }
+
+        // Reset Array
+        funders = new address [](0);
+
+        // withdrawl dana 
+
+        /* 
+        3 Hal dalam Withdrawl 
+        
+        send
+        call
+        */
+
+        // Transfer
+        // msg.sender = adress
+        // payable(msg.sender).transfer(address(this).balance);
+
+        // // send
+        // bool sendSuccess = payable(msg.sender).send(address(this).balance);
+        // require(sendSuccess, "Send failed");
+
+        // call
+        (bool callSuccess,) = payable(msg.sender).call{value: address(this).balance}("");
+        require(callSuccess, "Call failed");
     }
+
+    modifier onlyOwner() {
+        
+        require(msg.sender == owner, "Harus menjadi Owner!");
+        _;
+        // _; = mengeksekusi source kode setelah kode diatasnya, begitupun sebaliknya
+    }
+
 }
 
