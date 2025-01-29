@@ -1,7 +1,7 @@
 # Progress Funding Smart Contract
 
 ## Ringkasan
-1. **FundMe.sol**: mengirim dana dalam bentuk ETH dan kasi Minimum USD. Untuk fungsi withdrawl atau menarik masih belum berfungsi.
+1. **FundMe.sol**: mengirim dana dalam bentuk ETH dan kasi Minimum USD. Untuk fungsi withdrawl sudah berfungsi dan sudah menggunakan modifier agar terhindar dari serangan reetrancy.
 2. **PriceConverter.sol**: Library yang mengambil harga ETH Secara Langsung menggunakan oracle Chainlink dan mengonversi jumlah ETH ke USD.
 
 Kedua kontrak ini dirancang untuk dijalankan di SepoliaETH Testnet.
@@ -14,6 +14,7 @@ Kedua kontrak ini dirancang untuk dijalankan di SepoliaETH Testnet.
 1. Deploy kontrak melalui Remix Ethereum IDE.
 2. Pilih Sepolia Testnet untuk deployment.
 3. Interaksi dengan fungsi (pendanaan, cek saldo, penarikan) untuk memvalidasi perilaku.
+4. Pada penarikan sudah menyesuaikan address dari kontrak yang membuatnya menvalidasi menggunakan modifier `onlyOwner`
 
 ---
 
@@ -24,7 +25,7 @@ Kedua kontrak ini dirancang untuk dijalankan di SepoliaETH Testnet.
 - **Fungsi Pendanaan dan Withdrawl** ⌛
   - User bisa kasi dana kontrak menggunakan fungsi Fund, tetapi minimal $5 USD Menyesuaikan harga ETH Sekarang.
   - Bisa mengetahui dan melacak adress menggunakan mapping `addressToAmountFunded`.
-  - Fungsi Withdrawl untuk mengkosongkan dan ditarik, menggunakan loop untuk mereset saldonya.
+  - Fungsi Withdrawl untuk mengkosongkan dan ditarik, menggunakan loop untuk mereset saldonya dan menggunakan fungsi call().
 
 ### PriceConverter.sol✅
 - **Pengambilan Harga, Konversi ETH ke USD dan Cek Version** ⌛
@@ -39,6 +40,10 @@ Kedua kontrak ini dirancang untuk dijalankan di SepoliaETH Testnet.
 - **Kontrol Akses:** Tambahkan modifier untuk membatasi akses ke fungsi tertentu.
 - **Praktik Keamanan:** Implementasikan perlindungan terhadap reentrancy untuk mencegah potensi kerentanan.
 
+
+**Solusi keamanan** 
+  - Sudah menggunakan modifier `onlyOwner` agar membatasi address dari user yang lain agar tidak rentan saldo yang sudah ada pada address pembuat kontrak. 
+  - Sudah menggunakan 3 fungsi untuk withdrawl agar terlindungi dari reentrancy, yang kali ini menggunakan fungsi call(), yang mengembalikan 2 parameter boolean
 ---
 
 ## Kesimpulan
