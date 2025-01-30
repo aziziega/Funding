@@ -25,15 +25,20 @@ pragma solidity ^0.8.24;
 //import dari github AggregatorV3Interface
 import {PriceConverter} from "./PriceConverter.sol";
 
+error notOwner();
+
 contract FundMe {
     using PriceConverter for uint256;
+
     // 5 * (10 ** 18) atau 5 * 1e18
-    uint256 public minimumUsd = 5e18;
+    uint256 public constant MINIMUM_USD = 50 * 1e18;
+    // constant - untuk menghemat gas fee pada variabel
 
     address[] public funders;
     mapping (address => uint256 amountFunded) public addressToAmountFunded;
 
-    address public owner;
+    address public immutable owner;
+    // immutable - untuk menghemat gas fee pada address
 
     constructor () {
         owner = msg.sender;
@@ -44,7 +49,7 @@ contract FundMe {
         // allow user to send $
         // minimum $5 pengiriman
         // 1. how do we send ETH to this contract
-        require(msg.value.getConversionRate() >= minimumUsd, "Pengiriman ETH Kurang"); // 1e18 = 1ETH = 1000000000000000000 = 1 * 10 * 18
+        require(msg.value.getConversionRate() >= MINIMUM_USD, "Pengiriman ETH Kurang"); // 1e18 = 1ETH = 1000000000000000000 = 1 * 10 * 18
         
         funders.push(msg.sender);
         addressToAmountFunded[msg.sender] += msg.value;
@@ -90,14 +95,19 @@ contract FundMe {
         // call
         (bool callSuccess,) = payable(msg.sender).call{value: address(this).balance}("");
         require(callSuccess, "Call failed");
+        revert();
     }
 
     modifier onlyOwner() {
-        
-        require(msg.sender == owner, "Harus menjadi Owner!");
+        // require(msg.sender == owner, "Harus menjadi Owner!");
+        if(msg.sender != owner) {
+            revert notOwner();
+        }
         _;
         // _; = mengeksekusi source kode setelah kode diatasnya, begitupun sebaliknya
     }
 
+    // apa yang terjadi ketika seseorang mengirmkan kontrak ETH ini, tanpa memanggil fungsi dari fund
+    // 2 spesial function di solidity
 }
 
