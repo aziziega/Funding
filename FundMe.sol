@@ -109,5 +109,12 @@ contract FundMe {
 
     // apa yang terjadi ketika seseorang mengirmkan kontrak ETH ini, tanpa memanggil fungsi dari fund
     // 2 spesial function di solidity
+    receive() external payable {
+        fund();
+    }
+
+    fallback() external payable {
+        fund();
+    }
 }
 
